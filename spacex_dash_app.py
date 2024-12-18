@@ -9,19 +9,6 @@ import numpy as np
 # Read the airline data into pandas dataframe
 spacex_df = pd.read_csv( "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/datasets/spacex_launch_dash.csv")
 
-print(spacex_df.columns)
-
-def print_booster_category_success_rate() :
-    booster_categories = spacex_df['Booster Version Category'].unique()
-
-    for booster_category in booster_categories :
-        booster_data = spacex_df[ spacex_df['Booster Version Category'] == booster_category]
-
-        nb_success = len(booster_data[ booster_data['class'] == 1])
-        nb_total = len(booster_data)
-        print(booster_category, nb_success/nb_total)
-    
-
 max_payload = spacex_df['Payload Mass (kg)'].max()
 min_payload = spacex_df['Payload Mass (kg)'].min()
 
@@ -128,11 +115,6 @@ def get_payload_chart(entered_site, entered_payload_mass):
 
     data = filtered_df[ filtered_df['Payload Mass (kg)'].between(entered_payload_mass[0], entered_payload_mass[1]) ]
 
-    nb_success = len(data[ data['class'] == 1])
-    nb_total = len(data)
-    print(entered_payload_mass, "Success rate", nb_success / nb_total)
-
-
     fig = px.scatter(data, 
         x="Payload Mass (kg)",
         y="class",
@@ -145,7 +127,7 @@ def get_payload_chart(entered_site, entered_payload_mass):
 
 # Run the app
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server()
 
 
 # 1. Which site has the largest successful launches?
